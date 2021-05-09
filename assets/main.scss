@@ -1,0 +1,61 @@
+.theme--dark.v-application {
+  background: #292929;
+}
+
+.container {
+  margin: 200px auto;
+  box-shadow: -2px -1px 50px -7px #dec3af;
+  padding: 0;
+  border: 1px solid #dec3af;
+}
+
+
+.keyboard-page {
+  position: relative;
+  margin: 0;
+
+  .input-area {
+    border: 1px solid #864a39;
+    margin: 0 auto;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    color: transparent;
+    z-index: 2;
+  }
+
+  .literal-container {
+    display: flex;
+    justify-content: center;
+
+    .literal {
+      width: 52px;
+      text-align: center;
+      background: hsla(29, 38%, 82%, 1);
+      font-size: 40px;
+      color: #864a39;
+
+      &.success {
+        background: hsla(110, 67%, 82%, 1) !important;
+      }
+
+      &.fail {
+        background: hsla(0, 64%, 82%, 1) !important;
+      }
+    }
+  }
+
+  .info-container {
+    .number {
+      font-size: 3em;
+    }
+
+    .label {
+      color: hsl(0deg 0% 56%);
+    }
+  }
+}
+
