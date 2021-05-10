@@ -2,9 +2,13 @@
 	<v-row class="keyboard-page" justify="center" align="center">
 		<v-col cols="12" sm="12" md="12">
 			<label class="literal-container"
-				><span class="literal success"> R</span><span class="literal"> W</span
+				>
+
+				<span class="literal success"> R</span><span class="literal"> W</span
 				><span class="literal fail"> [</span><span class="literal"> /</span
-				><span class="literal"> E</span><span class="literal"> W</span></label
+				><span class="literal"> E</span><span class="literal"> W</span>
+
+			</label
 			>
 			<input type="text" class="input-area" />
 
@@ -28,6 +32,7 @@ export default {
 	data() {
 		return {
 			input: '',
+			currentWord: '',
 			keyIndex: 0,
 			words: [
 				'const',
@@ -119,6 +124,26 @@ export default {
 			],
 		};
 	},
-	created() {},
+	created() {
+		this.updateText();
+	},
+	methods: {
+		shuffleWords() {
+			for (let i = 0; i < this.words.length; i++) {
+				const newPos = Math.floor(Math.random() * this.words.length);
+
+				[this.words[i], this.words[newPos]] = [
+					this.words[newPos],
+					this.words[i],
+				];
+			}
+		},
+		generateText() {
+			return this.words[0];
+		},
+		updateText() {
+			this.currentWord = this.generateText();
+		},
+	},
 };
 </script>
