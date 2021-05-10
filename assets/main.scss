@@ -34,16 +34,11 @@
     .literal {
       width: 35px;
       text-align: center;
-      background: hsla(29, 38%, 82%, 1);
       font-size: 40px;
-      color: #864a39;
+      color: hsl(183deg 28% 63%);
 
-      &.success {
-        background: hsla(110, 67%, 82%, 1) !important;
-      }
-
-      &.fail {
-        background: hsla(0, 64%, 82%, 1) !important;
+      &.select {
+        background: hsl(0deg 0% 22%)
       }
     }
   }
