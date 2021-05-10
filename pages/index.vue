@@ -1,15 +1,11 @@
 <template>
 	<v-row class="keyboard-page" justify="center" align="center">
 		<v-col cols="12" sm="12" md="12">
-			<label class="literal-container"
-				>
-
-				<span class="literal success"> R</span><span class="literal"> W</span
-				><span class="literal fail"> [</span><span class="literal"> /</span
-				><span class="literal"> E</span><span class="literal"> W</span>
-
-			</label
-			>
+			<label class="literal-container">
+				<span v-for="(char, index) in currentWord" :key="index" class="literal">
+					{{ char }}
+				</span>
+			</label>
 			<input type="text" class="input-area" />
 
 			<v-row class="info-container">
@@ -124,7 +120,7 @@ export default {
 			],
 		};
 	},
-	created() {
+	mounted() {
 		this.updateText();
 	},
 	methods: {
@@ -139,7 +135,8 @@ export default {
 			}
 		},
 		generateText() {
-			return this.words[0];
+			this.shuffleWords();
+			return this.words[Math.floor(Math.random(this.words.length))];
 		},
 		updateText() {
 			this.currentWord = this.generateText();
