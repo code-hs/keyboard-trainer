@@ -1,12 +1,17 @@
 <template>
 	<v-row class="keyboard-page" justify="center" align="center">
 		<v-col cols="12" sm="12" md="12">
-			<label class="literal-container">
-				<span v-for="(char, index) in currentWord" :key="index" class="literal">
+			<div class="literal-container">
+				<span
+					v-for="(char, index) in currentWord"
+					:key="index"
+					class="literal"
+					:class="{select: keyIndex === index}"
+				>
 					{{ char }}
 				</span>
-			</label>
-			<input type="text" class="input-area" />
+			</div>
+			<input v-model="input" type="text" class="input-area" />
 
 			<v-row class="info-container">
 				<v-col align="center">
@@ -27,9 +32,6 @@
 export default {
 	data() {
 		return {
-			input: '',
-			currentWord: '',
-			keyIndex: 0,
 			words: [
 				'const',
 				'let',
@@ -117,8 +119,29 @@ export default {
 				'options',
 				'reduce',
 				'placeholder',
+				'watch',
+				'mounted',
 			],
+			input: '',
+			currentWord: '',
+			keyIndex: 0,
 		};
+	},
+	watch: {
+		input(v) {
+			if (v && this.currentWord.startsWith(v)) {
+				this.keyIndex++;
+
+				if (v === this.currentWord) {
+					this.keyIndex = 0;
+					this.input = '';
+					this.updateText();
+				}
+			} else {
+				this.keyIndex = 0;
+				this.input = '';
+			}
+		},
 	},
 	mounted() {
 		this.updateText();
@@ -136,7 +159,9 @@ export default {
 		},
 		generateText() {
 			this.shuffleWords();
-			return this.words[Math.floor(Math.random(this.words.length))];
+			const index = Math.random() * this.words.length;
+
+			return this.words[Math.floor(index)];
 		},
 		updateText() {
 			this.currentWord = this.generateText();
