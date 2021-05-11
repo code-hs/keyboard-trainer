@@ -15,12 +15,12 @@
 
 			<v-row class="info-container">
 				<v-col align="center">
-					<div class="number">38</div>
+					<div class="number">{{ info.count }}</div>
 					<div class="label">count</div>
 				</v-col>
 
 				<v-col align="center">
-					<div class="number">132</div>
+					<div class="number">{{ speed }}</div>
 					<div class="label">speed</div>
 				</v-col>
 			</v-row>
@@ -125,28 +125,48 @@ export default {
 			input: '',
 			currentWord: '',
 			keyIndex: 0,
+			info: {
+				startTime: Date.now(),
+				count: 0,
+			},
 		};
+	},
+	computed: {
+		speed() {
+			const seconds = (Date.now() - this.info.startTime) / 1000;
+			const charsInOneSecond = this.info.count / seconds;
+
+			return Math.round(charsInOneSecond * 60) || 0;
+		},
 	},
 	watch: {
 		input(v) {
-			if (v && this.currentWord.startsWith(v)) {
-				this.keyIndex++;
+			const isValidChar = v && this.currentWord.startsWith(v);
 
-				if (v === this.currentWord) {
-					this.keyIndex = 0;
-					this.input = '';
-					this.updateText();
-				}
-			} else {
-				this.keyIndex = 0;
-				this.input = '';
+			if (!isValidChar) {
+				this.clear();
+				return false;
 			}
+
+			this.keyIndex++;
+			this.info.count++;
+
+			// finish current word
+			if (v === this.currentWord) this.init();
 		},
 	},
 	mounted() {
-		this.updateText();
+		this.init();
 	},
 	methods: {
+		clear() {
+			this.keyIndex = 0;
+			this.input = '';
+		},
+		init() {
+			this.clear();
+			this.updateText();
+		},
 		shuffleWords() {
 			for (let i = 0; i < this.words.length; i++) {
 				const newPos = Math.floor(Math.random() * this.words.length);
